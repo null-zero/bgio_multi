@@ -1,8 +1,8 @@
 const { Server, Origins } = require("boardgame.io/server");
-const { TicTacToe } = require("./Game");
+const { Dominion } = require("./Game");
 
 const server = Server({
-    games: [TicTacToe],
+    games: [Dominion],
     origins: [Origins.LOCALHOST],
 });
 

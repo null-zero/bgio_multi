@@ -1,6 +1,6 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 
-export const TicTacToe = {
+export const Dominion = {
     setup: () => ({ cells: Array(9).fill(null) }),
   
     turn: {
