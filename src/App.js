@@ -183,6 +183,20 @@ class DominionClient {
             ) {
                 previousCtxStage = currentCtxStage;
 
+                if (currentCtxStage === "action") {
+                    const hand = this.rootElement.querySelectorAll("#hand > .cell");
+                    hand.forEach((card, index) => {
+                        if (card.dataset.type.includes("action")) {
+                            card.classList.add("hover:outline");
+                            card.classList.add("hover:outline-offset-2");
+                            card.classList.add("hover:outline-pink-500");
+
+                            card.onclick = (event) => {
+
+                            };
+                        }
+                    });
+                }
                 if (currentCtxStage === "confirmBuy") {
                     const shop = this.rootElement.querySelector(".shop");
 
