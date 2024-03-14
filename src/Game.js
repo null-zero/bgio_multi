@@ -61,6 +61,9 @@ export const Dominion = {
                         playerID,
                     });
                 }
+                if (newStage === "action") {
+                    events.setActivePlayers({ currentPlayer: "action" });
+                }
             }
         },
         stages: {
