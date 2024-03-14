@@ -128,14 +128,6 @@ class DominionClient {
             this.onConnected(state);
         }
 
-        // Get all the board cells.
-        const cells = this.rootElement.querySelectorAll(".cell");
-        // Update cells to display the values in game state.
-        cells.forEach((cell) => {
-            const cellId = parseInt(cell.dataset.id, 10);
-            const cellValue = state.G.cells[cellId];
-            // cell.textContent = cellValue !== null ? cellValue : '';
-        });
         const phaseEl = this.rootElement.querySelector("#phase");
         phaseEl.textContent = state.ctx.phase;
 
@@ -183,6 +175,9 @@ class DominionClient {
             ) {
                 previousCtxStage = currentCtxStage;
 
+                if (currentCtxStage === "cleanUp") {
+                    this.client.moves.DrawHand();
+                }
                 if (currentCtxStage === "confirmBuy") {
                     const shop = this.rootElement.querySelector(".shop");
 
