@@ -3,7 +3,6 @@ import { SocketIO } from "boardgame.io/multiplayer";
 import { Dominion } from "./Game";
 import { cards } from "./Objs/Cards";
 
-
 var currentCtxStage;
 var previousCtxStage;
 
@@ -65,23 +64,18 @@ class DominionClient {
         });
         //rows.push(`<div class="row">${cells.join('')}</div>`);
 
-        // Add the HTML to our app <div>.
-        // We’ll use the empty <p> to display the game winner later.
-
         this.rootElement.innerHTML = `
-      <h3>Player ${this.client.playerID}</h3>
-      <h4>Phase: <span id="phase"></span></h4>
-      <h4>Stage: <span id="stage"></span></h4>
-      <div class="shop grid grid-rows-2 grid-flow-col gap-4 w-min">${cells.join(
-          ""
-      )}</div>
-      <div class="controls"></div>
-      <hr class="m-4">
-      <div id="hand" class="hand grid gap-4 grid-flow-col w-min"></div>
-      <div class="deck"></div>
-      <p class="winner"></p>
-      <div class="shopSelection"></div>
-    `;
+            <h3>Player ${this.client.playerID}</h3>
+            <h4>Phase: <span id="phase"></span></h4>
+            <h4>Stage: <span id="stage"></span></h4>
+            <div class="shop grid grid-rows-2 grid-flow-col gap-4 w-min">${cells.join("")}</div>
+            <div class="controls"></div>
+            <hr class="m-4">
+            <div id="hand" class="hand grid gap-4 grid-flow-col w-min"></div>
+            <div class="deck"></div>
+            <p class="winner"></p>
+            <div class="shopSelection"></div>
+        `;
     }
 
     drawHand(state) {
@@ -152,36 +146,42 @@ class DominionClient {
         if (state.ctx.activePlayers != null) {
             currentCtxStage = state.ctx.activePlayers[this.client.playerID];
             if (previousCtxStage == undefined) {
-              previousCtxStage = 'a';
-            };
-
-            if (state.ctx.currentPlayer !== this.client.playerID || (currentCtxStage !== "confirmBuy" || currentCtxStage !== "action")) {
-              const shop = this.rootElement.querySelector(".shop");
-
-              shop.classList.remove("blur-xl");
-    
-              const selected =
-                  this.rootElement.querySelectorAll(".selected");
-              selected.forEach((ele) => {
-                  ele.classList.remove("selected");
-                  ele.onclick = null;
-              });
-              const hover =
-                  this.rootElement.querySelectorAll(".hover\\:outline");
-              hover.forEach((ele) => {
-                  ele.classList.remove("hover:outline");
-                  ele.classList.remove("hover:outline-offset-2");
-                  ele.classList.remove("hover:outline-pink-500");
-                  ele.onclick = null;
-              });
-    
-              let shopSelection =
-                  this.rootElement.querySelector(".shopSelection");
-              shopSelection.innerHTML = "";
+                previousCtxStage = "a";
             }
 
-            if (previousCtxStage !== currentCtxStage && currentCtxStage !== undefined) {
-              previousCtxStage = currentCtxStage;
+            if (
+                state.ctx.currentPlayer !== this.client.playerID ||
+                currentCtxStage !== "confirmBuy" ||
+                currentCtxStage !== "action"
+            ) {
+                const shop = this.rootElement.querySelector(".shop");
+
+                shop.classList.remove("blur-xl");
+
+                const selected = this.rootElement.querySelectorAll(".selected");
+                selected.forEach((ele) => {
+                    ele.classList.remove("selected");
+                    ele.onclick = null;
+                });
+                const hover =
+                    this.rootElement.querySelectorAll(".hover\\:outline");
+                hover.forEach((ele) => {
+                    ele.classList.remove("hover:outline");
+                    ele.classList.remove("hover:outline-offset-2");
+                    ele.classList.remove("hover:outline-pink-500");
+                    ele.onclick = null;
+                });
+
+                let shopSelection =
+                    this.rootElement.querySelector(".shopSelection");
+                shopSelection.innerHTML = "";
+            }
+
+            if (
+                previousCtxStage !== currentCtxStage &&
+                currentCtxStage !== undefined
+            ) {
+                previousCtxStage = currentCtxStage;
 
                 if (currentCtxStage === "confirmBuy") {
                     const shop = this.rootElement.querySelector(".shop");
@@ -245,12 +245,11 @@ class DominionClient {
                                             this.client.moves.buyCard();
                                             this.drawHand(state);
                                         };
-                                    } 
+                                    }
                                 }
                             };
                         }
                     });
-                    
                 }
             }
 
@@ -271,57 +270,36 @@ class DominionClient {
                     this.rootElement.classList.remove("active");
                 }
             }
-            previousCtxStage = currentCtxStage;            
+            previousCtxStage = currentCtxStage;
         }
-      }
+    }
 }
 
 function createCardEle(card) {
     let attr = cards[card];
     return `<div class="cell" data-card="${card}" data-type="${attr.type}">
-      <div class="card">
-      <div class="card-content">
-        <div class="card-header">
-        ${
-            attr.coins > 0
-                ? `<div class="card-coins c-left">${attr.coins}</div>`
-                : ""
-        }
-        <div class="card-name">${card}</div>
-        ${
-            attr.coins > 0
-                ? `<div class="card-coins c-right">${attr.coins}</div>`
-                : ""
-        }
-        <div class="card-quantity"></div>
-      </div>
-      <div class="card-image"></div>
-      <div class="card-body">
-      
-      ${
-          attr.actions > 0
-              ? `<div class="card-actions">+${attr.actions} Actions</div>`
-              : ""
-      }
-        ${
-            attr.cards > 0
-                ? `<div class="card-cards">+${attr.cards} Cards</div>`
-                : ""
-        }
-        ${
-            attr.buys > 0
-                ? `<div class="card-buys">+${attr.buys} Buys</div>`
-                : ""
-        }
+        <div class="card">
+            <div class="card-content">
+            <div class="card-header">
+            ${attr.coins > 0 ? `<div class="card-coins c-left">${attr.coins}</div>` : ""}
+            <div class="card-name">${card}</div>
+            ${attr.coins > 0 ? `<div class="card-coins c-right">${attr.coins}</div>` : ""}
+            <div class="card-quantity"></div>
+        </div>
+        <div class="card-image"></div>
+        <div class="card-body">
+            ${attr.actions > 0 ? `<div class="card-actions">+${attr.actions} Actions</div>` : ""}
+            ${attr.cards > 0 ? `<div class="card-cards">+${attr.cards} Cards</div>` : ""}
+            ${attr.buys > 0 ? `<div class="card-buys">+${attr.buys} Buys</div>` : ""}
         <div class="card-description">${attr.description}</div>
         </div>
         <div class="card-footer">
-          <div class="card-cost">${attr.cost}</div>
-          <div class="card-type">${attr.type}</div>
+            <div class="card-cost">${attr.cost}</div>
+            <div class="card-type">${attr.type}</div>
         </div>
         </div>
-      </div>
-      </div>`;
+</div>
+</div>`;
 }
 class App {
     constructor(rootElement) {
