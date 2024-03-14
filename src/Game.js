@@ -1,4 +1,5 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
+import { cards } from "./Objs/Cards";
 
 export const Dominion = {
     setup: () => ({ cells: Array(9).fill(null) }),

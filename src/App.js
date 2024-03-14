@@ -1,6 +1,7 @@
 import { Client } from 'boardgame.io/client';
 import { SocketIO } from 'boardgame.io/multiplayer';
 import { Dominion } from './Game';
+import { cards } from "./Objs/Cards";
 
 function SplashScreen(rootElement) {
   return new Promise((resolve) => {
