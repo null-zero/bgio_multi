@@ -1,4 +1,5 @@
-import { INVALID_MOVE } from 'boardgame.io/core';
+import { INVALID_MOVE } from "boardgame.io/core";
+import { Stage, ActivePlayers, PlayerView } from "boardgame.io/core";
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 
@@ -33,14 +34,42 @@ export const Dominion = {
     },
 
     moves: {
-        clickCell: ({ G, playerID }, id) => {
-            if (G.cells[id] !== null) {
-              return INVALID_MOVE;
-            }
-            G.cells[id] = playerID;
-          }
+    phases: {
+        beginning: {
+            moves: {
+                DrawHand: {
+                    move: DrawHand,
+                    client: false,
+                },
+            },
+            start: true,
+            endIf: ({ G, ctx }) => {
+                for (let i = 0; i < ctx.numPlayers; i++) {
+                    if (G.players[i].hand.length != 5) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            next: "main",
+        },
+        main: {
+            moves: {
+                DrawHand: {
+                    move: DrawHand,
+                    client: false,
+                },
+                DrawCard: {
+                    move: DrawCard,
+                    client: false,
+                },
+            },
+            next: "end",
+        },
+        end: {
+        },
     },
-    
+
     endIf: ({ G, ctx }) => {
         /* End conditions not implemented yet. Leaving these commented here for reference. */
 
