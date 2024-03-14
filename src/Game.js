@@ -1,4 +1,5 @@
-import { INVALID_MOVE } from 'boardgame.io/core';
+import { INVALID_MOVE } from "boardgame.io/core";
+import { Stage, ActivePlayers, PlayerView } from "boardgame.io/core";
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 
@@ -33,17 +34,64 @@ export const Dominion = {
     },
 
     moves: {
-        clickCell: ({ G, playerID }, id) => {
-            if (G.cells[id] !== null) {
-              return INVALID_MOVE;
-            }
-            G.cells[id] = playerID;
-          }
+    phases: {
+        beginning: {
+            moves: {
+                DrawHand: {
+                    move: DrawHand,
+                    client: false,
+                },
+            },
+            start: true,
+            endIf: ({ G, ctx }) => {
+                for (let i = 0; i < ctx.numPlayers; i++) {
+                    if (G.players[i].hand.length != 5) {
+                        return false;
+                    }
+                }
+                return true;
+            },
+            next: "main",
+        },
+        main: {
+            moves: {
+                DrawHand: {
+                    move: DrawHand,
+                    client: false,
+                },
+                DrawCard: {
+                    move: DrawCard,
+                    client: false,
+                },
+            },
+            next: "end",
+        },
+        end: {
+        },
     },
-    
+
     endIf: ({ G, ctx }) => {
         if (IsVictory(G.cells)) {
           return { winner: ctx.currentPlayer };
+function DrawHand({ G, playerID, events, random }) {
+    if (
+        Math.abs(5 - G.players[playerID].hand.length) >
+        G.secret.players[playerID].deck.length
+    ) {
+        G.secret.players[playerID].deck = G.secret.players[
+            playerID
+        ].deck.concat(G.players[playerID].discard);
+        G.secret.players[playerID].deck = shuffleDeck({ G, playerID, random });
+        G.players[playerID].discard = [];
+    }
+    while (G.players[playerID].hand.length < 5) {
+        DrawCard({ G, playerID });
+    }
+    events.endTurn();
+}
+function DrawCard({ G, playerID }) {
+    G.players[playerID].hand.push(G.secret.players[playerID].deck.pop());
+}
         }
         if (IsDraw(G.cells)) {
           return { draw: true };
