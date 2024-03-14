@@ -15,12 +15,17 @@ npm install esm
 -----
 ### Running
 
-#### Server
+#### Dev Server
 ```sh
 npm run serve
 ```
 
-#### Client
+#### Dev Client
 ```sh
 npm start
+```
+
+#### Tailwind
+```sh
+npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
 ```
