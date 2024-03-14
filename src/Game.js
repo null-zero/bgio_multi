@@ -1,9 +1,32 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 import { cards } from "./Objs/Cards";
+import { startingDeck } from "./Objs/StartingDeck";
 
 export const Dominion = {
-    setup: () => ({ cells: Array(9).fill(null) }),
-  
+    setup: ({ random }) => ({
+        secret: {
+            players: {
+                0: {
+                    deck: random.Shuffle(startingDeck()),
+                },
+                1: {
+                    deck: random.Shuffle(startingDeck()),
+                },
+            },
+        },
+        players: {
+            0: {
+                hand: [],
+                discard: [],
+            },
+            1: {
+                hand: [],
+                discard: [],
+            },
+        },
+    }),
+    playerView: PlayerView.STRIP_SECRETS,
+
     turn: {
         minMoves: 1,
         maxMoves: 1,
