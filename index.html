@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>boardgame.io Tutorial</title>
   <meta charset="utf-8" />
+  <link rel="stylesheet" href="./src/output.css">
   <style>
     .cell {
       border: 1px solid #555;
-      width: 50px;
+      width: max-content;
       height: 50px;
+      padding: 0.5rem;
       line-height: 50px;
       text-align: center;
     }
+
     .active .cell:empty {
-        background: #eeffe9;
-      }
-      .active .cell:empty:hover {
-        background: #fff;
-      }
+      background: #eeffe9;
+    }
+
+    .active .cell:empty:hover {
+      background: #fff;
+    }
   </style>
 </head>
+
 <body>
   <div id="app"></div>
   <script src="./src/App.js"></script>
 </body>
+
 </html>
