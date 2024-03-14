@@ -1,6 +1,7 @@
 import { Client } from 'boardgame.io/client';
 import { SocketIO } from 'boardgame.io/multiplayer';
-import { TicTacToe } from './Game';
+import { Dominion } from './Game';
+import { cards } from "./Objs/Cards";
 
 function SplashScreen(rootElement) {
   return new Promise((resolve) => {
@@ -19,7 +20,7 @@ function SplashScreen(rootElement) {
 class DominionClient {
   constructor(rootElement, { playerID } = {}) {
     this.client = Client({
-      game: TicTacToe,
+      game: Dominion,
       multiplayer: SocketIO({ server: 'localhost:8000' }),
       playerID,
     });
