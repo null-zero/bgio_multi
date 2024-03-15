@@ -28,6 +28,7 @@ class DominionClient {
             game: Dominion,
             multiplayer: SocketIO({ server: "localhost:8000" }),
             playerID,
+            maxPlayers: 2, // SET PLAYER COUNT
         });
         this.connected = false;
         this.client.start();

@@ -1,5 +1,5 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
-import { PlayerView,  Stage,  ActivePlayer } from "boardgame.io/core";
+import { PlayerView,  Stage,  ActivePlayers } from "boardgame.io/core";
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 
