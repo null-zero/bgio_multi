@@ -15,7 +15,6 @@ export function cellarAction({ G, playerID, events }, bool=false) {
     
         for (let i = 0; i < discardedCount; i++) {
             drawCard({ G, playerID });
-            console.log(`drawCard ${i}`);
         }
 
         G.players[playerID].handSelection = {};
