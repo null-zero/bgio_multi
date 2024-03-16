@@ -2,21 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-table {
-    border-spacing: 1rem;
-}
-.cell {
-    width: 225px !important;
-    height: 300px !important;
-}
 .card {
     background-color: black;
     padding: 0.7rem;
-    width: 100%;
-    height: 100%;
+    width: 225px !important;
+    height: 300px !important;
     /* width: 15rem; */
     /* height: 20rem; */
     /* margin: 1rem; */
+    border: 1px solid #555;
+    padding: 0.5rem;
+    line-height: 50px;
+    text-align: center;
 }
 
 .card .card-content {
@@ -30,23 +27,23 @@ table {
     display: flex;
     flex-direction: column;
 }
-div[data-type="treasure"] .card .card-content {
+div[data-type="treasure"].card .card-content {
     background-color: #ebdb8d;
     padding: 0.5rem;
 }
-div[data-type="action"] .card .card-content {
+div[data-type="action"].card .card-content {
     background-color: #a7afb0;
     padding: 0.5rem;
 }
-div[data-type="action - reaction"] .card .card-content {
+div[data-type="action - reaction"].card .card-content {
     background-color: #8b9da8;
     padding: 0.5rem;
 }
-div[data-type="victory"] .card .card-content {
+div[data-type="victory"].card .card-content {
     background-color: #9cc689;
     padding: 0.5rem;
 }
-div[data-type="curse"] .card .card-content {
+div[data-type="curse"].card .card-content {
     background-color: #a58bbb;
     padding: 0.5rem;
 }
@@ -148,8 +145,40 @@ div[data-type="action - reaction"] .card-footer .card-type{
 
 
 .shopSelection {
+    z-index: 2;
     position: absolute;
-    top: 50%;
+    /* left: 50%;
+    top: 25%; */
+    top: 25%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
+}
+
+.shop {
+    /* position: relative; */
+}
+
+.shopContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.confirmPlayerHandSelection {
+    z-index: 2;
+    position: absolute;
+    /* left: 50%;
+    top: 25%; */
+    top: 25%;
+    left: 50%;
+}
+
+.disabled {
+    filter: grayscale(1);
+    opacity:0.5;
+}
+
+.shift-up {
+    /* transform: translateY(-50%); */
 }

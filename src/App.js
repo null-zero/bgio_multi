@@ -23,11 +23,14 @@ function SplashScreen(rootElement) {
 }
 
 class DominionClient {
-    constructor(rootElement, { playerID } = {}) {
+    constructor(rootElement, {
         this.client = Client({
             game: Dominion,
             multiplayer: SocketIO({ server: "localhost:8000" }),
+                server: "localhost:8000",
+            }),
             playerID,
+            maxPlayers: 2, // SET PLAYER COUNT
         });
         this.connected = false;
         this.client.start();
@@ -46,7 +49,6 @@ class DominionClient {
         this.createBoard();
         this.attachListeners();
         if (state.ctx.phase === "beginning") {
-            this.client.moves.DrawHand();
         }
     }
 
@@ -55,7 +57,6 @@ class DominionClient {
     }
 
     createBoard() {
-        const rows = [];
         const cells = [];
 
         Object.entries(cards).forEach(([card, attr], index) => {
@@ -128,14 +129,6 @@ class DominionClient {
             this.onConnected(state);
         }
 
-        // Get all the board cells.
-        const cells = this.rootElement.querySelectorAll(".cell");
-        // Update cells to display the values in game state.
-        cells.forEach((cell) => {
-            const cellId = parseInt(cell.dataset.id, 10);
-            const cellValue = state.G.cells[cellId];
-            // cell.textContent = cellValue !== null ? cellValue : '';
-        });
         const phaseEl = this.rootElement.querySelector("#phase");
         phaseEl.textContent = state.ctx.phase;
 
@@ -182,7 +175,23 @@ class DominionClient {
                 currentCtxStage !== undefined
             ) {
                 previousCtxStage = currentCtxStage;
+                if (currentCtxStage === "action") {
+                    const hand = this.rootElement.querySelectorAll("#hand > .cell");
+                    hand.forEach((card, index) => {
+                        if (card.dataset.type.includes("action")) {
+                            card.classList.add("hover:outline");
+                            card.classList.add("hover:outline-offset-2");
+                            card.classList.add("hover:outline-pink-500");
 
+                            card.onclick = (event) => {
+
+                            };
+                        }
+                    });
+                }
+                if (currentCtxStage === "cleanUp") {
+                    this.client.moves.DrawHand();
+                }
                 if (currentCtxStage === "confirmBuy") {
                     const shop = this.rootElement.querySelector(".shop");
 

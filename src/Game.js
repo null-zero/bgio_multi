@@ -1,4 +1,5 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
+import { PlayerView,  Stage,  ActivePlayers } from "boardgame.io/core";
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 
@@ -60,6 +61,9 @@ export const Dominion = {
                         G,
                         playerID,
                     });
+                }
+                if (newStage === "action") {
+                    events.setActivePlayers({ currentPlayer: "action" });
                 }
             }
         },
