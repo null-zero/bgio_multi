@@ -32,6 +32,7 @@ class DominionClient {
                 server: "localhost:8000",
             }),
             playerID,
+            maxPlayers: 2, // SET PLAYER COUNT
         });
         this.connected = false;
         this.client.start();
@@ -49,7 +50,7 @@ class DominionClient {
         this.connected = true;
         this.createBoard();
         this.attachListeners();
-        if (state.ctx.phase === "beginning") {
+        if (state.ctx.phase == "beginning") {
             this.client.moves.drawHand();
         }
     }
@@ -185,7 +186,7 @@ class DominionClient {
         const phaseEl = this.rootElement.querySelector("#phase");
         phaseEl.textContent = state.ctx.phase;
 
-        if (state.ctx.phase === "main") {
+        if (state.ctx.phase == "main") {
             this.drawHandEle(state);
         }
 
@@ -202,9 +203,9 @@ class DominionClient {
             ) {
                 previousCtxStage = currentCtxStage;
 
-                if (currentCtxStage === "action") {
+                if (currentCtxStage == "action") {
                     this.hoverEffect("#hand > .card", true, "action");
-                } else if (currentCtxStage === "cleanUp") {
+                } else if (currentCtxStage == "cleanUp") {
                     this.client.moves.drawHand();
                 }
             }
@@ -223,7 +224,7 @@ class DominionClient {
             };
 
 
-            if (currentCtxStage === "buy") {
+            if (currentCtxStage == "buy") {
                 let shopCard = state.G.players[this.client.playerID].shopSelection;
                 let shopCollateral = state.G.players[this.client.playerID].handSelection;
                 let shopSelectionValue = state.G.players[this.client.playerID].selectionValue;
@@ -284,7 +285,7 @@ class DominionClient {
                     currentPlayer
                 } = state.ctx;
                 messageEl.textContent = `It’s player ${currentPlayer}’s turn`;
-                if (currentPlayer === this.client.playerID) {
+                if (currentPlayer == this.client.playerID) {
                     this.rootElement.classList.add("active");
                 } else {
                     this.rootElement.classList.remove("active");
