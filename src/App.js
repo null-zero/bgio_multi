@@ -23,10 +23,12 @@ function SplashScreen(rootElement) {
 }
 
 class DominionClient {
-    constructor(rootElement, { playerID } = {}) {
+    constructor(rootElement, {
         this.client = Client({
             game: Dominion,
             multiplayer: SocketIO({ server: "localhost:8000" }),
+                server: "localhost:8000",
+            }),
             playerID,
             maxPlayers: 2, // SET PLAYER COUNT
         });
@@ -47,7 +49,6 @@ class DominionClient {
         this.createBoard();
         this.attachListeners();
         if (state.ctx.phase === "beginning") {
-            this.client.moves.DrawHand();
         }
     }
 
@@ -56,7 +57,6 @@ class DominionClient {
     }
 
     createBoard() {
-        const rows = [];
         const cells = [];
 
         Object.entries(cards).forEach(([card, attr], index) => {
