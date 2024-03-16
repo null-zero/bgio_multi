@@ -1,4 +1,4 @@
-import { INVALID_MOVE } from 'boardgame.io/core';
+import { INVALID_MOVE, PlayerView } from 'boardgame.io/core';
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 import * as cardActions from "./CardActions/Actions";
