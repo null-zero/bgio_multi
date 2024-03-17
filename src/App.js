@@ -23,9 +23,7 @@ function SplashScreen(rootElement) {
 }
 
 class DominionClient {
-    constructor(rootElement, {
-        playerID
-    } = {}) {
+    constructor(rootElement, { playerID } = {}) {
         this.client = Client({
             game: Dominion,
             multiplayer: SocketIO({
@@ -65,7 +63,6 @@ class DominionClient {
             if (card == "curse") return;
             shopCards.push(createCardEle(card));
         });
-        //rows.push(`<div class="row">${cells.join('')}</div>`);
 
         this.rootElement.innerHTML = `
             <h3>Player ${this.client.playerID}</h3>
@@ -99,7 +96,7 @@ class DominionClient {
     }
 
     attachListeners() {
-        // Attach event listeners to the board cells.
+        // Attach event listeners.
         const shopCards = this.rootElement.querySelectorAll(".shop > .card");
         const playerHand = this.rootElement.querySelectorAll("#hand > .card");
         const playerDeck = this.rootElement.querySelector(".deck");

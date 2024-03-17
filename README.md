@@ -11,6 +11,7 @@
 npm install boardgame.io
 npm install --save-dev parcel-bundler
 npm install esm
+npm install -D tailwindcss
 ```
 -----
 ### Running
