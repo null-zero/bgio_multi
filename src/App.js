@@ -211,7 +211,7 @@ class DominionClient {
             if (currentCtxStage != "buy" || currentCtxStage != "playerHandSelection") {
                 const shop = this.rootElement.querySelector(".shop");
                 let shopSelectionEle = this.rootElement.querySelector(".shopSelection");
-                shop.classList.remove("blur-xl");
+                shop.classList.remove("blur-xl", "pointer-events-none");
                 shopSelectionEle.innerHTML = "";
                 this.hoverEffect("#hand > .card", false);
                 this.selectedHandEffect(state, false);
@@ -229,7 +229,7 @@ class DominionClient {
                 const shop = this.rootElement.querySelector(".shop");
 
                 if (shopCard != null || shopCard != undefined) {
-                    shop.classList.add("blur-xl");
+                    shop.classList.add("blur-xl", "pointer-events-none");
 
                     shopSelectionEle.innerHTML = createCardEle(shopCard);
     
@@ -257,7 +257,7 @@ class DominionClient {
                 const confirmButton = this.rootElement.querySelector(".confirmPlayerHandSelection");
                 const shop = this.rootElement.querySelector(".shop");
 
-                    shop.classList.add("blur-xl");
+                    shop.classList.add("blur-xl", "pointer-events-none");
     
                     this.hoverEffect("#hand > .card", true, "treasure");
                     this.selectedHandEffect(state);
