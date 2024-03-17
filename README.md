@@ -8,6 +8,7 @@
 
 ### Installation
 ```sh
+npm init --yes
 npm install boardgame.io
 npm install --save-dev parcel-bundler
 npm install esm
