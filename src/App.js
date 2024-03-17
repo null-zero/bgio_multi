@@ -257,12 +257,12 @@ class DominionClient {
                 const confirmButton = this.rootElement.querySelector(".confirmPlayerHandSelection");
                 const shop = this.rootElement.querySelector(".shop");
 
-                    shop.classList.add("blur-xl");
-    
-                    this.hoverEffect("#hand > .card", true, "treasure");
-                    this.selectedHandEffect(state);
+                shop.classList.add("blur-xl");
 
-                    confirmButton.classList.remove("hidden");
+                this.hoverEffect("#hand > .card:not(disabled)", true);
+                this.selectedHandEffect(state);
+
+                confirmButton.classList.remove("hidden");
 
                 let playerHandNotDisabled = this.rootElement.querySelector("#hand > .card:not(disabled)")
                 playerHandNotDisabled.classList.add("shift-up");
