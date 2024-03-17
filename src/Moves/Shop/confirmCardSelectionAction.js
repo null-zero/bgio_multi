@@ -7,5 +7,8 @@ export function confirmCardSelectionAction({ G, playerID, events }) {
     if (G.players[playerID].actions < 1) {
         events.endStage();
         events.setStage("buy");
+    } else {
+        events.endStage();
+        events.setStage("action");
     }
 }
