@@ -1,7 +1,8 @@
-import { INVALID_MOVE } from 'boardgame.io/core';
-import { PlayerView,  Stage,  ActivePlayers } from "boardgame.io/core";
+import { INVALID_MOVE, PlayerView,  Stage,  ActivePlayers } from "boardgame.io/core";
 import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
+import * as cardActions from "./CardActions/Actions";
+import * as Moves from "./Moves/Moves";
 
 export const Dominion = {
     setup: ({ random }) => ({
@@ -21,28 +22,29 @@ export const Dominion = {
                 discard: [],
                 buyingPower: 0,
                 buys: 1,
-                actions: 1,
-                shop: {
-                    shopSelection: null,
-                    shopSelectCards: {},
-                },
+                actions: 0,
+                shopSelection: null,
+                selectionValue: 0,
+                handSelection: {},
+                action: {},
             },
             1: {
                 hand: [],
                 discard: [],
                 buyingPower: 0,
                 buys: 1,
-                actions: 1,
-                shop: {
-                    shopSelection: null,
-                    shopSelectCards: {},
-                },
+                actions: 0,
+                shopSelection: null,
+                selectionValue: 0,
+                handSelection: {},
+                action: {},
             },
         },
     }),
     playerView: PlayerView.STRIP_SECRETS,
 
     turn: {
+        activePlayers: { all: "init" , minMoves: 1, maxMoves: 1 },
         onBegin: ({ G, ctx, events }) => {
             let playerID = ctx.currentPlayer;
             G.players[playerID].buys = 1;
@@ -51,13 +53,14 @@ export const Dominion = {
                 let newStage = "buy";
                 for (const cname of G.players[playerID].hand) {
                     if (cards[cname].type.includes("action")) {
+                        G.players[playerID].actions = 1;
                         newStage = "action";
                         break;
                     }
                 }
                 if (newStage === "buy") {
                     events.setActivePlayers({ currentPlayer: "buy" });
-                    G.players[playerID].buyingPower = calculateBuyingPower({
+                    G.players[playerID].buyingPower = Moves.calculateBuyingPower({
                         G,
                         playerID,
                     });
@@ -70,8 +73,8 @@ export const Dominion = {
         stages: {
             init: {
                 moves: {
-                    DrawHand: {
-                        move: DrawHand,
+                    drawHand: {
+                        move: Moves.drawHand,
                         client: false,
                     },
                 },
@@ -83,27 +86,66 @@ export const Dominion = {
             action: ({ G, playerID }) => ({
                 minMoves: 0,
                 maxMoves: G.players[playerID].actions,
-                moves: { playCard },
-                next: "selectBuy",
+                moves: { 
+                    playCard: {
+                        move: Moves.playCard,
+                    }
+                },
+                next: "buy",
             }),
-            selectBuy: ({ G, playerID }) => ({
+            buy: ({ G, playerID }) => ({
                 minMoves: 0,
                 maxMoves: G.players[playerID].buys,
                 moves: {
-                    selectBuy,
+                    selectPurchase: {
+                        move: Moves.selectPurchase,
+                        noLimit: true,
+                    },
+                    selectCard: {
+                        move: Moves.selectCard,
+                        noLimit: true,
+                    },
+                    deselectCard: {
+                        move: Moves.deselectCard,
+                        noLimit: true,
+                    },
+                    buyCard: {
+                        move: Moves.buyCard,
+                    },
                 },
-                next: "confirmBuy",
-            }),
-            confirmBuy: {
-                moves: { buyCard, shopSelectCard, shopDeselectCard },
                 next: "cleanUp",
+            }),
+            playerHandSelection: {
+                minMoves: 1,
+                maxMoves: 1,
+                moves: {
+                    selectCard: {
+                        move: Moves.selectCard,
+                        noLimit: true,
+                    },
+                    deselectCard: {
+                        move: Moves.deselectCard,
+                        noLimit: true,
+                    },
+                    confirmCardSelectionAction: {
+                        move: Moves.confirmCardSelectionAction,
+                        client: false,
+                    },
+                    drawCard: {
+                        move: Moves.drawCard,
+                        client: false,
+                        noLimit: true,
+                        optimistic: false,
+                    }
+                },
+                next: "action",
             },
             cleanUp: {
                 minMoves: 1,
                 maxMoves: 1,
                 moves: {
-                    DrawHand: {
-                        move: DrawHand,
+                    drawHand: {
+                        move: Moves.drawHand,
                         client: false,
                     },
                 },
@@ -113,24 +155,35 @@ export const Dominion = {
     },
 
     moves: {
-        DrawCard,
-        DrawHand: {
-            move: DrawHand,
+        drawCard: {
+            move: Moves.drawCard,
             client: false,
         },
-        playCard,
-        buyCard,
-        drawCard: ({ G, playerID }) => {
-            G.players[playerID]["hand"].push(G.players[playerID]["deck"].pop());
+        drawHand: {
+            move: Moves.drawHand,
+            client: false,
         },
-        shuffleDeck,
+        playCard: {
+            move: Moves.playCard,
+        },
+        buyCard: {
+            move: Moves.buyCard,
+        },
+        shuffleDeck: {
+            move: Moves.shuffleDeck,
+            client: false,
+        },
+        confirmCardSelectionAction: {
+            move: Moves.confirmCardSelectionAction,
+            client: false,
+        },
     },
 
     phases: {
         beginning: {
             moves: {
-                DrawHand: {
-                    move: DrawHand,
+                drawHand: {
+                    move: Moves.drawHand,
                     client: false,
                 },
             },
@@ -147,19 +200,38 @@ export const Dominion = {
         },
         main: {
             moves: {
-                DrawHand: {
-                    move: DrawHand,
+                drawHand: {
+                    move: Moves.drawHand,
                     client: false,
                 },
-                DrawCard: {
-                    move: DrawCard,
+                drawCard: {
+                    move: Moves.drawCard,
                     client: false,
                 },
-                selectBuy,
-                playCard,
-                buyCard,
-                discard,
-                shopSelectCard,
+                selectPurchase: {
+                    move: Moves.selectPurchase,
+                },
+                playCard: {
+                    move: Moves.playCard,
+                },
+                buyCard: {
+                    move: Moves.buyCard,
+                },
+                discard: {
+                    move: Moves.discard,
+                },
+                selectCard: {
+                    move: Moves.selectCard,
+                    noLimit: true,
+                },
+                deselectCard: {
+                    move: Moves.deselectCard,
+                    noLimit: true,
+                },
+                confirmCardSelectionAction: {
+                    move: Moves.confirmCardSelectionAction,
+                    client: false,
+                },
             },
             next: "end",
         },
@@ -198,146 +270,3 @@ export const Dominion = {
 
 //     return positions.map(isRowComplete).some((i) => i === true);
 // }
-
-function DrawHand({ G, playerID, events, random }) {
-    if (
-        Math.abs(5 - G.players[playerID].hand.length) >
-        G.secret.players[playerID].deck.length
-    ) {
-        G.secret.players[playerID].deck = G.secret.players[
-            playerID
-        ].deck.concat(G.players[playerID].discard);
-        G.secret.players[playerID].deck = shuffleDeck({ G, playerID, random });
-        G.players[playerID].discard = [];
-    }
-    while (G.players[playerID].hand.length < 5) {
-        DrawCard({ G, playerID });
-    }
-    events.endTurn();
-}
-
-function shuffleDeck({ G, playerID, random }) {
-    return random.Shuffle(G.secret.players[playerID].deck);
-}
-
-function DrawCard({ G, playerID }) {
-    G.players[playerID].hand.push(G.secret.players[playerID].deck.pop());
-}
-
-function playCard({ G, playerID }, card) {
-    if (card === undefined || card === null) {
-        return INVALID_MOVE;
-    }
-    if (!cards[card].type.includes("action")) {
-        return INVALID_MOVE;
-    }
-
-    let actions = cards[card].actions;
-    let cards = cards[card].cards;
-    let buys = cards[card].buys;
-    let coins = cards[card].coins;
-
-    G.players[playerID].actions += actions;
-    G.players[playerID].buys += buys;
-    G.players[playerID].buyingPower += coins;
-
-    G.players[playerID].discard.push(G.players[playerID].hand.pop(card));
-}
-
-function selectBuy({ G, playerID, events }, card) {
-    if (card === undefined || card === null) {
-        return INVALID_MOVE;
-    }
-
-    if (G.players[playerID].buyingPower < cards[card].cost) {
-        return INVALID_MOVE;
-    }
-
-    if (G.players[playerID].buys < 1) {
-        return INVALID_MOVE;
-    }
-
-    G.players[playerID].shop.shopSelection = card;
-    events.setActivePlayers({ currentPlayer: "confirmBuy" });
-}
-
-function buyCard({ G, playerID, events }) {
-    let selection = G.players[playerID].shop.shopSelectCards;
-    if (selection === undefined || selection === null) {
-        return INVALID_MOVE;
-    }
-
-    let selectionValue = 0;
-    Object.values(selection).forEach((card) => {
-        selectionValue += cards[card].coins;
-    });
-
-    if (selectionValue < cards[G.players[playerID].shop.shopSelection].cost) {
-        return INVALID_MOVE;
-    }
-
-    G.players[playerID]["discard"].push(G.players[playerID].shop.shopSelection);
-    G.players[playerID].buys--;
-    G.players[playerID].buyingPower -= cards[G.players[playerID].shop.shopSelection].cost;
-    discardSelection({ G, playerID }, selection);
-    if (G.players[playerID].buys < 1) {
-        events.endStage();
-    } else {
-        events.setActivePlayers({ currentPlayer: "selectBuy" });
-    }
-}
-
-function calculateBuyingPower({ G, playerID }) {
-    let buyingPower = 0;
-    G.players[playerID].hand.forEach((card) => {
-        if (cards[card].type.includes("treasure")) {
-            buyingPower += cards[card].coins;
-        }
-    });
-    return buyingPower;
-}
-
-function discard({ G, playerID }, card) {
-    if (card === undefined || card === null) {
-        return INVALID_MOVE;
-    }
-    G.players[playerID]["discard"].push(G.players[playerID]["hand"].pop(card));
-}
-
-function discardSelection({ G, playerID }, selection) {
-    if (selection === undefined || selection === null) {
-        return INVALID_MOVE;
-    }
-
-    Object.entries(G.players[playerID].shop.shopSelectCards).forEach(
-        (index, card) => {
-            G.players[playerID]["discard"].push(
-                G.players[playerID]["hand"].splice(index, 1)[0]
-            );
-        }
-    );
-
-    G.players[playerID].shop.shopSelection = {};
-    G.players[playerID].shop.shopSelectCards = {};
-}
-
-function shopSelectCard({ G, ctx, playerID }, index, card) {
-    if (
-        card === undefined ||
-        card === null ||
-        index === undefined ||
-        index === null
-    ) {
-        return INVALID_MOVE;
-    }
-    ctx.numMoves--;
-    G.players[playerID].shop.shopSelectCards[index] = card;
-}
-
-function shopDeselectCard({ G, ctx, playerID }, index) {
-    if (index === undefined || index === null) {
-        return INVALID_MOVE;
-    }
-    ctx.numMoves--;
-    delete G.players[playerID].shop.shopSelectCards[index];
-}
