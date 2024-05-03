@@ -1,4 +1,4 @@
-import * as cardActions from "../../CardActions/Actions";
+import * as cardActions from "../../../CardActions/Actions";
 
 export function confirmCardSelectionAction({ G, playerID, events }) {
     cardActions.Action({ G, playerID, events }, G.players[playerID].action.name, true);

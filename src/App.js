@@ -30,7 +30,7 @@ class DominionClient {
                 server: "localhost:8000",
             }),
             playerID,
-            maxPlayers: 2, // SET PLAYER COUNT
+            maxPlayers: 2, // SET PLAYER COUNT -> different when using the full lobby system
         });
         this.connected = false;
         this.client.start();
@@ -180,20 +180,26 @@ class DominionClient {
             this.onConnected(state);
         }
 
+        // update phase text
         const phaseEl = this.rootElement.querySelector("#phase");
         phaseEl.textContent = state.ctx.phase;
 
+        // draws players hands once all players have connected and the phase updates to main
         if (state.ctx.phase == "main") {
             this.drawHandEle(state);
         }
 
+        
         if (state.ctx.activePlayers != null) {
+            // get the current stage of the player from game state
             currentCtxStage = state.ctx.activePlayers[this.client.playerID];
 
+            // janky method of making sure previousStage is defined
             if (previousCtxStage == undefined) {
                 previousCtxStage = "a";
             }
 
+            // check if the stage has changed, then updated previous stage and run the appropriate function
             if (
                 previousCtxStage !== currentCtxStage &&
                 currentCtxStage !== undefined
@@ -201,13 +207,15 @@ class DominionClient {
                 previousCtxStage = currentCtxStage;
 
                 if (currentCtxStage == "action") {
+                    // enable card hover effects if the stage is action
                     this.hoverEffect("#hand > .card", true, "action");
                 } else if (currentCtxStage == "cleanUp") {
+                    // draw a new hand if the stage is cleanUp
                     this.client.moves.drawHand();
                 }
             }
 
-
+            // check if the stage is not buy or playerHandSelection, then remove the shop blur and pointer events
             if (currentCtxStage != "buy" || currentCtxStage != "playerHandSelection") {
                 const shop = this.rootElement.querySelector(".shop");
                 let shopSelectionEle = this.rootElement.querySelector(".shopSelection");
@@ -220,7 +228,7 @@ class DominionClient {
                 confirmButton.classList.add("hidden");
             };
 
-
+            // check if the stage is buy, then add the shop blur and pointer events
             if (currentCtxStage == "buy") {
                 let shopCard = state.G.players[this.client.playerID].shopSelection;
                 let shopCollateral = state.G.players[this.client.playerID].handSelection;
@@ -231,11 +239,13 @@ class DominionClient {
                 if (shopCard != null || shopCard != undefined) {
                     shop.classList.add("blur-xl", "pointer-events-none");
 
+                    // add the selected card to the shopSelection element
                     shopSelectionEle.innerHTML = createCardEle(shopCard);
     
                     this.hoverEffect("#hand > .card", true, "treasure");
                     this.selectedHandEffect(state);
     
+                    // add effect to shop selection if the players accumulative card selection value is enough to buy the card
                     if (shopSelectionValue >= cards[shopCard].cost) {
                         shopSelectionEle.classList.add("selected");
                     } else {
@@ -244,8 +254,10 @@ class DominionClient {
                 }
             };
 
+
             if (currentCtxStage == "playerHandSelection") {
 
+                // sets effects for playerHandSelection stage (currently only designed for discarding cards)
                 let playerHand = this.rootElement.querySelectorAll("#hand > .card");
 
                 let actionCard = state.G.players[this.client.playerID].action;
@@ -269,18 +281,23 @@ class DominionClient {
             }
 
 
+
+
+
             // Get the gameover message element.
             const messageEl = this.rootElement.querySelector(".winner");
-            // Update the element to show a winner if any.
             if (state.ctx.gameover) {
+                // NO GAMEOVER STATES IMPLEMENT YET
+
+                // If the game is over, display the winner.
                 messageEl.textContent =
                     state.ctx.gameover.winner !== undefined ?
                         "Winner: " + state.ctx.gameover.winner :
                         "Draw!";
             } else {
-                const {
-                    currentPlayer
-                } = state.ctx;
+
+                // Display the current player's turn.
+                const {currentPlayer} = state.ctx;
                 messageEl.textContent = `It’s player ${currentPlayer}’s turn`;
                 if (currentPlayer == this.client.playerID) {
                     this.rootElement.classList.add("active");
@@ -292,14 +309,14 @@ class DominionClient {
         }
     }
 
-    selectedHandEffect(state, bool=true) {
+    selectedHandEffect(state, selected=true) {
         let playerHand = this.rootElement.querySelectorAll("#hand > .card");
         let shopCollateral = state.G.players[this.client.playerID].handSelection;
 
         playerHand.forEach((card, index) => {
             if (card.classList.contains("disabled")) return;
 
-            if (bool && shopCollateral[index] !== undefined){
+            if (selected && shopCollateral[index] !== undefined){
                 card.classList.add("selected");
             } else {
                 card.classList.remove("selected");
@@ -307,14 +324,14 @@ class DominionClient {
         });
     };
 
-    hoverEffect(selector, bool=true, type = null) {
+    hoverEffect(selector, selected=true, type=null) {
         const parent = this.rootElement.querySelectorAll(selector);
         const classList = ["hover:outline", "hover:outline-offset-2", "hover:outline-pink-500"];
         parent.forEach((child) => {
             if (type == null && !child.dataset.type.includes(type)) return;
             if (child.classList.contains("disabled")) return;
             
-            if (bool) {
+            if (selected) {
                 child.classList.add(classList[0], classList[1], classList[2]);
             } else {
                 child.classList.remove(classList[0], classList[1], classList[2]);
