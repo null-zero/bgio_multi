@@ -2,16 +2,19 @@ import { INVALID_MOVE } from 'boardgame.io/core';
 import { cards } from '../../../Objs/Cards';
 
 export function selectCard({ G, ctx, playerID }, action, index) {
+    // empty function call
     if ( index == undefined || index == null) {
         return INVALID_MOVE;
     }
 
+    // get server card object
     let card = cards[G.players[playerID].hand[index]];
     if (card == undefined || card == null) {
         return INVALID_MOVE;
     }
 
     switch (action) {
+        // if current action is to buy a card, check if the card is a treasure card
         case "buy":
             if (!card.type.includes("treasure")) {
                 return INVALID_MOVE;
@@ -19,6 +22,7 @@ export function selectCard({ G, ctx, playerID }, action, index) {
             G.players[playerID].handSelection[index] = card.name;
             G.players[playerID].selectionValue += card.coins;
             break;
+        // if current action is to select a card to discard, check if the card is an action card
         case "playerHandSelection":
             G.players[playerID].handSelection[index] = card.name;
             break;
