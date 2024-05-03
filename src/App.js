@@ -46,6 +46,7 @@ class DominionClient {
 
     onConnected(state) {
         this.connected = true;
+        this.drawBackground();
         this.createBoard();
         this.attachListeners();
         if (state.ctx.phase == "beginning") {
@@ -57,6 +58,9 @@ class DominionClient {
         this.rootElement.innerHTML = "<p>connecting…</p>";
     }
 
+    drawBackground() {
+        this.rootElement.classList.add("bg-orion");
+    }
     createBoard() {
         const shopCards = [];
         Object.entries(cards).forEach(([card, attr], index) => {
@@ -69,14 +73,16 @@ class DominionClient {
             <h4>Phase: <span id="phase"></span></h4>
             <h4>Stage: <span id="stage"></span></h4>
             <div class="shopContainer">
-            <div class="shop grid grid-rows-2 grid-flow-col gap-4 w-min">${shopCards.join("")}</div>
+            <div class="shop mx-auto grid grid-rows-2 grid-flow-col gap-3">${shopCards.join("")}</div>
             <button class="confirmPlayerHandSelection hidden bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Confirm</button>
             <div class="shopSelection"></div>
             </div>
+            <div id="player">
             <div class="controls"></div>
             <hr class="m-4">
-            <div id="hand" class="hand grid gap-4 grid-flow-col w-min"></div>
+            <div id="hand" class="hand grid gap-3 grid-flow-col w-min"></div>
             <div class="deck"></div>
+            </div>
             <p class="winner"></p>
         `;
 
