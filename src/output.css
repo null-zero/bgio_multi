@@ -535,6 +535,10 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .m-4 {
   margin: 1rem;
 }

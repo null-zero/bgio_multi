@@ -6,11 +6,11 @@ export { selectCard } from './Player/Hand/selectCard.js';
 export { discard } from './Player/Hand/discard.js';
 export { discardSelection } from './Player/Hand/discardSelection.js';
 export { playCard } from './Player/Hand/playCard.js';
+export { confirmCardSelectionAction } from './Player/Hand/confirmCardSelectionAction.js';
 
 // Shop Imports
 export { buyCard } from './Shop/buyCard.js';
 export { selectPurchase } from './Shop/selectPurchase.js';
-export { confirmCardSelectionAction } from './Shop/confirmCardSelectionAction.js';
 
 // Utility Imports
 export { shuffleDeck } from './Player/Deck/shuffleDeck.js';

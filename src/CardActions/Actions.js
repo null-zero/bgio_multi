@@ -5,15 +5,18 @@ export function Action({ G, playerID, events }, cardName, bool=false) {
     if (cardName == undefined || cardName == null) {
         cardName = G.players[playerID].action;
     }
-
+    let res = "";
     switch (cardName) {
         case "cellar":
-            return cellarAction({ G, playerID, events }, bool);
+            res = cellarAction({ G, playerID, events }, bool);
             break;
         default:
-            return false;
+            res = false;
             break;
     }
-
-    G.players[playerID].action = {};
+    if (bool){
+        G.players[playerID].action = {};
+    }
+    
+    return res;
 }
