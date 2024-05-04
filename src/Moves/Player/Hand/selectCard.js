@@ -14,9 +14,9 @@ export function selectCard({ G, ctx, playerID }, action, index) {
     }
 
     switch (action) {
-        // if current action is to buy a card, check if the card is a resource card
+        // if current action is to buy a card, check if the card is a treasure card
         case "buy":
-            if (!card.type.includes("resource")) {
+            if (!card.type.includes("treasure")) {
                 return INVALID_MOVE;
             }
             G.players[playerID].handSelection[index] = card.name;
