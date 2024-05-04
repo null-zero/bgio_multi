@@ -15,3 +15,4 @@ export { selectPurchase } from './Shop/selectPurchase.js';
 // Utility Imports
 export { shuffleDeck } from './Player/Deck/shuffleDeck.js';
 export { calculateBuyingPower } from '../Utility/calculateBuyingPower.js';
+export { getPlayerHandSize } from '../Utility/getPlayerHandSize.js';

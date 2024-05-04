@@ -709,7 +709,7 @@ h2, h3, h4 {
   flex-direction: column;
 }
 
-div[data-type="treasure"].card .card-content {
+div[data-type="resource"].card .card-content {
   background-color: #ebdb8d;
   padding: 0.5rem;
 }
@@ -724,12 +724,12 @@ div[data-type="action - reaction"].card .card-content {
   padding: 0.5rem;
 }
 
-div[data-type="victory"].card .card-content {
+div[data-type="influence"].card .card-content {
   background-color: #9cc689;
   padding: 0.5rem;
 }
 
-div[data-type="curse"].card .card-content {
+div[data-type="sabotage"].card .card-content {
   background-color: #a58bbb;
   padding: 0.5rem;
 }
@@ -744,7 +744,9 @@ div[data-type="curse"].card .card-content {
 }
 
 .card .card-name {
+  width: 60%;
   height: 100%;
+  margin: 0 auto;
   line-height: 2;
   text-align: center;
 }
@@ -775,7 +777,7 @@ div[data-type="curse"].card .card-content {
   font-size: 0.8rem;
 }
 
-div[data-type="treasure"] .card-header .card-coins,
+div[data-type="resource"] .card-header .card-coins,
 .card-footer .card-cost {
   display: flex;
   /* or inline-flex */
@@ -797,7 +799,7 @@ div[data-type="treasure"] .card-header .card-coins,
   left: 0.3rem;
 }
 
-div[data-type="treasure"] .card-header .card-coins.c-right {
+div[data-type="resource"] .card-header .card-coins.c-right {
   top: 0.3rem;
   right: 0.3rem;
 }
@@ -839,12 +841,13 @@ div[data-type="action - reaction"] .card-footer .card-type{
 }
 
 .shopSelection {
+  scale: 1.75;
   z-index: 2;
   position: absolute;
   /* left: 50%;
     top: 25%; */
   top: 25%;
-  left: 50%;
+  /* left: 50%; */
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
 }
@@ -909,6 +912,7 @@ body {
       rgba(0, 0, 0, 1) 80%,
       rgba(0, 0, 0, 1) 100%
     ), url('../images/orion.jpg');
+  background-position: -100px;
 }
 
 #player {

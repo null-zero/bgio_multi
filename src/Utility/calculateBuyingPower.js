@@ -6,7 +6,7 @@ export function calculateBuyingPower({ G, playerID }) {
 
     G.players[playerID].hand.forEach((card) => {
         if (card == null || card == undefined) return;
-        if (cards[card].type.includes("treasure")) {
+        if (cards[card].type.includes("resource")) {
             buyingPower += cards[card].coins;
         }
     });
