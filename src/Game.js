@@ -3,6 +3,7 @@ import { cards } from "./Objs/Cards";
 import { startingDeck } from "./Objs/StartingDeck";
 import * as cardActions from "./CardActions/Actions";
 import * as Moves from "./Moves/Moves";
+import { getPlayerHandSize } from "./Utility/getPlayerHandSize";
 
 
 /**
@@ -68,6 +69,7 @@ export const Dominion = {
     turn: {
         /* force the player to draw a hand at the beginning of their turn see turn->stages->init */
         activePlayers: { all: "init" , minMoves: 1, maxMoves: 1 },
+        playerHandCounts: getPlayerHandSize,
 
 
         /* set player state at the beginning of their turn, and check if they have any action cards in their hand
@@ -119,7 +121,7 @@ export const Dominion = {
                 moves: { 
                     playCard: {
                         move: Moves.playCard,
-                    }
+                    },
                 },
                 next: "buy", // set the next stage
             }),
@@ -173,7 +175,7 @@ export const Dominion = {
                         client: false,
                         noLimit: true,
                         optimistic: false,
-                    }
+                    },
                 },
                 /* calculates the next stage based on the number of action cards in the player's hand */
                 next: ({ G, playerID, ctx }) => {
@@ -298,7 +300,7 @@ export const Dominion = {
     endIf: ({ G, ctx }) => {
         /* end conditions not implemented yet. Leaving these commented here for reference. */
 
-        // if (IsVictory(G.cells)) {
+        // if (Isinfluence(G.cells)) {
         //     return { winner: ctx.currentPlayer };
         // }
         // if (IsDraw(G.cells)) {
@@ -307,7 +309,7 @@ export const Dominion = {
 
 
         /* original code for endIf */
-        // function IsVictory(cells) {
+        // function Isinfluence(cells) {
         //     const positions = [
         //         [0, 1, 2],
         //         [3, 4, 5],
