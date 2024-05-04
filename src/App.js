@@ -5,6 +5,7 @@ import { cards } from "./Objs/Cards";
 
 var currentCtxStage;
 var previousCtxStage;
+var previousTurn;
 
 function SplashScreen(rootElement) {
     return new Promise((resolve) => {
@@ -64,7 +65,7 @@ class DominionClient {
     createBoard() {
         const shopCards = [];
         Object.entries(cards).forEach(([card, attr], index) => {
-            if (card == "curse") return;
+            if (card == "sabotage") return;
             shopCards.push(createCardEle(card));
         });
 
@@ -194,8 +195,15 @@ class DominionClient {
         if (state.ctx.phase == "main") {
             this.drawHandEle(state);
         }
-
-        
+        // if (previousTurn == undefined) {
+        //     previousTurn = "a";
+        // } else {
+        //     if (previousTurn !== state.ctx.turn) {
+        //         let playersHandSize = this.client.moves.getPlayerHandSize();
+        //         console.log(playersHandSize);
+        //         previousTurn = state.ctx.turn;
+        //     }
+        // }
         if (state.ctx.activePlayers != null) {
             // get the current stage of the player from game state
             currentCtxStage = state.ctx.activePlayers[this.client.playerID];
@@ -248,7 +256,7 @@ class DominionClient {
                     // add the selected card to the shopSelection element
                     shopSelectionEle.innerHTML = createCardEle(shopCard);
     
-                    this.hoverEffect("#hand > .card", true, "treasure");
+                    this.hoverEffect("#hand > .card", true, "resource");
                     this.selectedHandEffect(state);
     
                     // add effect to shop selection if the players accumulative card selection value is enough to buy the card
@@ -278,7 +286,7 @@ class DominionClient {
 
                 shop.classList.add("blur-xl", "pointer-events-none");
 
-                this.hoverEffect("#hand > .card:not(disabled)", true, "treasure");
+                this.hoverEffect("#hand > .card:not(disabled)", true, "resource");
                 this.selectedHandEffect(state);
 
                 confirmButton.classList.remove("hidden");
@@ -353,7 +361,7 @@ function createCardEle(card) {
     <div class="card-content">
         <div class="card-header">
             ${attr.coins > 0 ? `<div class="card-coins c-left">${attr.coins}</div>`:""}
-            <div class="card-name">${card}</div>
+            <div class="card-name">${attr.name}</div>
             ${attr.coins > 0 ? `<div class="card-coins c-right">${attr.coins}</div>`:""}
             <div class="card-quantity"></div>
         </div>
