@@ -19,12 +19,12 @@ export function selectCard({ G, ctx, playerID }, action, index) {
             if (!card.type.includes("resource")) {
                 return INVALID_MOVE;
             }
-            G.players[playerID].handSelection[index] = card.name;
+            G.players[playerID].handSelection[index] = card.id;
             G.players[playerID].selectionValue += card.coins;
             break;
         // if current action is to select a card to discard, check if the card is an action card
         case "playerHandSelection":
-            G.players[playerID].handSelection[index] = card.name;
+            G.players[playerID].handSelection[index] = card.id;
             break;
     };
     //ctx.numMoves--;

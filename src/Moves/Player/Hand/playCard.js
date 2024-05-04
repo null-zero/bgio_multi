@@ -25,7 +25,7 @@ export function playCard({ G, playerID, events }, card) {
     // set player action to the card being played
     // used for client side to allow for card specific actions
     G.players[playerID].action["playerHandIndex"] = card;
-    G.players[playerID].action["name"] = _card.name;
+    G.players[playerID].action["name"] = _card.id;
 
     // add the cards actions, draws, buys, and coins to the players stats
     let actions = _card.actions;
@@ -41,5 +41,5 @@ export function playCard({ G, playerID, events }, card) {
     // G.players[playerID].discard.push(G.players[playerID].hand.splice(card, 1)[0]);
 
 
-    cardActions.Action({ G, playerID, events }, _card.name);
+    cardActions.Action({ G, playerID, events }, _card.id);
 };

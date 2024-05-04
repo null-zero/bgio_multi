@@ -1,5 +1,6 @@
 export const cards = {
     galactic_ice: {
+        id: "galactic_ice",
         name: "Galactic Ice",
         type: "resource",
         description: "",
@@ -10,7 +11,8 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    silver: {
+    mineral_deposit: {
+        id: "mineral_deposit",
         name: "Mineral Deposit",
         type: "resource",
         description: "",
@@ -21,7 +23,8 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    gold: {
+    antimatter: {
+        id: "antimatter",
         name: "Antimatter",
         type: "resource",
         description: "",
@@ -33,6 +36,7 @@ export const cards = {
         influence: 0,
     },
     estate: {
+        id: "estate",
         name: "estate",
         type: "influence",
         description: "",
@@ -44,6 +48,7 @@ export const cards = {
         influence: 0,
     },
     duchy: {
+        id: "duchy",
         name: "duchy",
         type: "influence",
         description: "",
@@ -55,6 +60,7 @@ export const cards = {
         influence: 0,
     },
     province: {
+        id: "province",
         name: "province",
         type: "influence",
         description: "",
@@ -66,6 +72,7 @@ export const cards = {
         influence: 0,
     },
     sabotage: {
+        id: "sabotage",
         name: "sabotage",
         type: "sabotage",
         description: "-1 influence Point",
@@ -77,6 +84,7 @@ export const cards = {
         influence: 0,
     },
     cellar: {
+        id: "cellar",
         name: "cellar",
         type: "action",
         description: "Discard any number of cards, then draw that many.",
@@ -88,6 +96,7 @@ export const cards = {
         influence: 0,
     },
     moat: {
+        id: "moat",
         name: "moat",
         type: "action - reaction",
         description: "When another player plays an Attack card, you may first reveal this from your hand, to be unaffected by it.",
@@ -99,6 +108,7 @@ export const cards = {
         influence: 0,
     },
     village: {
+        id: "village",
         name: "village",
         type: "action",
         description: "Draw 1 card, +2 Actions.",
@@ -110,6 +120,7 @@ export const cards = {
         influence: 0,
     },
     merchant: {
+        id: "merchant",
         name: "merchant",
         type: "action",
         description: "The first time you play a Silver this turn, +1 Coin.",
@@ -121,6 +132,7 @@ export const cards = {
         influence: 0,
     },
     workshop: {
+        id: "workshop",
         name: "workshop",
         type: "action",
         description: "Gain a card costing up to 4.",
@@ -132,6 +144,7 @@ export const cards = {
         influence: 0,
     },
     smithy: {
+        id: "smithy",
         name: "smithy",
         type: "action",
         description: "Draw 3 cards.",
@@ -143,6 +156,7 @@ export const cards = {
         influence: 0,
     },
     remodel: {
+        id: "remodel",
         name: "remodel",
         type: "action",
         description: "Trash a card from your hand. Gain a card costing up to 2 more than the trashed card.",
@@ -154,6 +168,7 @@ export const cards = {
         influence: 0,
     },
     militia: {
+        id: "militia",
         name: "militia",
         type: "action",
         description: "Each other player discards down to 3 cards in hand.",
@@ -165,6 +180,7 @@ export const cards = {
         influence: 0,
     },
     market: {
+        id: "market",
         name: "market",
         type: "action",
         description: "",
@@ -176,6 +192,7 @@ export const cards = {
         influence: 0,
     },
     mine: {
+        id: "mine",
         name: "mine",
         type: "action",
         description: "Trash a resource from your hand. Gain a resource to your hand costing up to 3 more than it.",
