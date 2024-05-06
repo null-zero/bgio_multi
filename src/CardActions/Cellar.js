@@ -5,6 +5,7 @@ export function cellarAction({ G, playerID, events }, bool=false) {
 
     if (!bool) {
         events.setStage("playerHandSelection");
+        return false;
     } else {
         let selection = G.players[playerID].handSelection;
         let discardedCount = Object.keys(selection).length;

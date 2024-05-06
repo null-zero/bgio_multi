@@ -1,19 +1,24 @@
 import { cellarAction } from "./Cellar.js";
+import { discard } from "../Moves/Moves";
 
 export function Action({ G, playerID, events }, cardName, bool=false) {
 
     if (cardName == undefined || cardName == null) {
         cardName = G.players[playerID].action;
     }
-
+    let res = "";
     switch (cardName) {
         case "cellar":
-            return cellarAction({ G, playerID, events }, bool);
+            res = cellarAction({ G, playerID, events }, bool);
             break;
         default:
-            return false;
+            res = true;
             break;
     }
-
-    G.players[playerID].action = {};
+    // if (bool){
+    //     discard({ G, playerID }, G.players[playerID].action.playerHandIndex);
+    //     G.players[playerID].action = {};
+    // }
+    
+    return res;
 }

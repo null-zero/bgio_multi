@@ -535,8 +535,17 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .m-4 {
   margin: 1rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mb-2 {
@@ -545,6 +554,14 @@ video {
 
 .me-2 {
   margin-inline-end: 0.5rem;
+}
+
+.inline {
+  display: inline;
+}
+
+.flex {
+  display: flex;
 }
 
 .grid {
@@ -572,8 +589,12 @@ video {
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
-.gap-4 {
-  gap: 1rem;
+.justify-around {
+  justify-content: space-around;
+}
+
+.gap-3 {
+  gap: 0.75rem;
 }
 
 .rounded {
@@ -651,8 +672,9 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.outline {
-  outline-style: solid;
+.blur {
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .blur-xl {
@@ -660,10 +682,23 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
+
 /* .shop .card {
     width: 157px !important;
     height: 210px !important;
 } */
+
+h2, h3, h4 {
+  color: white;
+}
 
 .card {
   background-color: black;
@@ -690,7 +725,7 @@ video {
   flex-direction: column;
 }
 
-div[data-type="treasure"].card .card-content {
+div[data-type="resource"].card .card-content {
   background-color: #ebdb8d;
   padding: 0.5rem;
 }
@@ -705,12 +740,12 @@ div[data-type="action - reaction"].card .card-content {
   padding: 0.5rem;
 }
 
-div[data-type="victory"].card .card-content {
+div[data-type="influence"].card .card-content {
   background-color: #9cc689;
   padding: 0.5rem;
 }
 
-div[data-type="curse"].card .card-content {
+div[data-type="sabotage"].card .card-content {
   background-color: #a58bbb;
   padding: 0.5rem;
 }
@@ -725,7 +760,9 @@ div[data-type="curse"].card .card-content {
 }
 
 .card .card-name {
+  width: 60%;
   height: 100%;
+  margin: 0 auto;
   line-height: 2;
   text-align: center;
 }
@@ -750,13 +787,13 @@ div[data-type="curse"].card .card-content {
   justify-content: space-between;
   position: absolute;
   bottom: 0;
-  height: 20%;
+  height: 35%;
   left: -2.5px;
   width: 102%;
   font-size: 0.8rem;
 }
 
-div[data-type="treasure"] .card-header .card-coins,
+div[data-type="resource"] .card-header .card-coins,
 .card-footer .card-cost {
   display: flex;
   /* or inline-flex */
@@ -778,7 +815,7 @@ div[data-type="treasure"] .card-header .card-coins,
   left: 0.3rem;
 }
 
-div[data-type="treasure"] .card-header .card-coins.c-right {
+div[data-type="resource"] .card-header .card-coins.c-right {
   top: 0.3rem;
   right: 0.3rem;
 }
@@ -799,18 +836,29 @@ div[data-type="action - reaction"] .card-footer .card-type{
   background-color: #7ca8d9;
 }
 
-.deck {
-  display: none !important;
+#deck {
+  position: absolute;
+  bottom: 0px;
+  /* right: 0px; */
+  right: 15rem;
+  scale: 0.8;
+  /* display: none !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    padding: 1rem;
+    background-color: #e9e7d7;
+    width: 15rem;
+    height: 20rem; */
+}
+
+#deck .card {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  align-content: center;
-  padding: 1rem;
-  background-color: #e9e7d7;
-  width: 15rem;
-  height: 20rem;
 }
 
 .selected {
@@ -820,24 +868,58 @@ div[data-type="action - reaction"] .card-footer .card-type{
 }
 
 .shopSelection {
+  scale: 1.75;
   z-index: 2;
   position: absolute;
   /* left: 50%;
     top: 25%; */
-  top: 25%;
-  left: 50%;
+  /* top: 25%; */
+  width: 90vw;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* left: 50%; */
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
 }
 
+.shopSelection.hidden {
+  display: none;
+}
+
 .shop {
+  /* transform: scale(0.6); */
+  height: 100%;
+  width: 100%;
+  min-width: min-content;
+  display: flex;
+  flex-direction: column;
   /* position: relative; */
 }
 
+.shop > .resources,
+.shop > .actions,
+.shop > .influences {
+}
+
+.shop > .actions {
+  margin: 0 auto;
+}
+
+.shop .card {
+  /* transform: scale(0.6); */
+}
+
 .shopContainer {
-  position: relative;
+  scale: 0.6;
+  top: -6rem;
+  position: absolute;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
-  height: 100%;
 }
 
 .confirmPlayerHandSelection {
@@ -845,8 +927,11 @@ div[data-type="action - reaction"] .card-footer .card-type{
   position: absolute;
   /* left: 50%;
     top: 25%; */
-  top: 25%;
-  left: 50%;
+  top: 50%;
+  /* left: 50%; */
+  width: 200px;
+  height: 100px;
+  font-size: 2.5rem;
 }
 
 .disabled {
@@ -854,8 +939,220 @@ div[data-type="action - reaction"] .card-footer .card-type{
   opacity:0.5;
 }
 
+.shop-disabled {
+  filter: grayscale(1);
+  opacity:0.8;
+}
+
 .shift-up {
   /* transform: translateY(-50%); */
+}
+
+#app {
+  height: 99vh;
+  width: 99vw;
+}
+
+/* body{
+    background-image: url('../images/Layer 3.jpg');
+    object-fit: scale-down;
+    background-size: 100% 100%;
+} */
+
+#hand {
+  scale: 0.8;
+}
+
+body {
+  background-image: radial-gradient(
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 1) 80%,
+      rgba(0, 0, 0, 1) 100%
+    ), url('../images/orion.jpg');
+  /* background-position: -100px; */
+  background-size: 100% 105%;
+  background-repeat: no-repeat;
+}
+
+#player {
+  position: absolute;
+  width: 98vw;
+  bottom: 0px;
+}
+
+#currentPlayer_container {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0 auto;
+  color: white;
+  width:max-content;
+  font-size: 3rem;
+}
+
+.shop.card .card-body {
+  top: 20%;
+  position: absolute;
+  text-align: center;
+  width: 94%;
+}
+
+.shop.card .card-name {
+  width: 100%;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.shop.card .card-type {
+  padding-left: 2rem;
+  /* margin-left: 3.5rem; */
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop.card .card-cost {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.shop.card div[data-type="resource"] .card-header .card-coins,
+.card-footer .card-cost {
+  display: flex;
+  /* or inline-flex */
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  align-self: center;
+  position: absolute;
+  background-color: #c1a551;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  text-align:center;
+  z-index: 1;
+  /* margin-left: 1rem; */
+}
+
+.shop.card .card-header .card-coins {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.shop .resources,
+.shop .influences,
+.shop .actions {
+  scale: 0.7;
+}
+
+.shop .resources,
+.shop .influences {
+  gap: 2rem;
+}
+
+.shop .actions .card .card-header .card-coins {
+  display: none;
+}
+
+.shopSelection .card-footer,
+#hand .card-footer {
+  height: 20%;
+}
+
+.shopSelection .card-footer .card-cost {
+  left: 0.3rem;
+}
+
+.shopSelection .card-header,
+.shopSelection .card-header .card-name,
+#hand .card-header,
+#hand .card-header .card-name {
+  width: 107%;
+  left: -7px;
+  top: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: space-between;
+  text-align: center;
+  /* position: unset; */
+}
+
+.shopSelection div[data-type="resource"] .card-header .card-coins.c-right,
+#hand div[data-type="resource"] .card-header .card-coins.c-right {
+  top: 0.8rem;
+  right: 0.8rem;
+}
+
+.shopSelection div[data-type="resource"] .card-header .card-coins.c-left,
+#hand div[data-type="resource"] .card-header .card-coins.c-left {
+  top: 0.8rem;
+  left: 0.8rem;
+}
+
+.shopSelection div[data-type="action"] .card-header .card-coins,
+#hand div[data-type="action"] .card-header .card-coins  {
+  display: flex;
+  /* or inline-flex */
+  align-items: center;
+  justify-content: center;
+  justify-self: start;
+  align-self: center;
+  position: absolute;
+  background-color: #c1a551;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  text-align:center;
+  z-index: 1;
+  /* margin-left: 1rem; */
+}
+
+div[data-type="action"] .card-header .card-coins {
+  display: none !important;
+}
+
+.shopSelection .card-header .card-name,
+#hand .card-header .card-name {
+  /* line-height: 1.5; */
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+@media screen and (min-height: 1200px) {
+  .shopContainer {
+    top: unset;
+  }
+}
+
+.title {
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+}
+
+#deck .card.active {
+  background: rgba(0, 0, 0, 0.2);
+  animation: glow 1s infinite alternate;
+}
+
+.card {
+  cursor: pointer;
+  -webkit-user-select: none;
+          user-select: none;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0px 0px 45px -25px rgba(255,242,0,0.9);
+  }
+
+  to {
+    box-shadow: 0px 0px 45px 25px rgba(255,242,0,0.9);
+  }
 }
 
 .hover\:bg-blue-700:hover {
