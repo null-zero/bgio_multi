@@ -35,9 +35,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    estate: {
-        id: "estate",
-        name: "estate",
+    diplomatic_accord: {
+        id: "diplomatic_accord",
+        name: "Diplomatic Accord",
         type: "influence",
         description: "",
         cost: 2,
@@ -47,9 +47,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    duchy: {
-        id: "duchy",
-        name: "duchy",
+    military_conquest: {
+        id: "military_conquest",
+        name: "Military Conquest",
         type: "influence",
         description: "",
         cost: 5,
@@ -59,9 +59,21 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    province: {
-        id: "province",
-        name: "province",
+    economic_prosperity: {
+        id: "economic_prosperity",
+        name: "Economic Prosperity",
+        type: "influence",
+        description: "",
+        cost: 8,
+        coins: 0,
+        actions: 0,
+        buy: 0,
+        cards: 0,
+        influence: 0,
+    },
+    galactic_unity: {
+        id: "galactic_unity",
+        name: "Galactic Unity",
         type: "influence",
         description: "",
         cost: 8,
@@ -83,9 +95,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    cellar: {
-        id: "cellar",
-        name: "cellar",
+    refill_station: {
+        id: "refill_station",
+        name: "Refill Station",
         type: "action",
         description: "Discard any number of cards, then draw that many.",
         cost: 2,
@@ -95,9 +107,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    moat: {
-        id: "moat",
-        name: "moat",
+    ionic_shield: {
+        id: "ionic_shield",
+        name: "Ionic Shield",
         type: "action - reaction",
         description: "When another player plays an Attack card, you may first reveal this from your hand, to be unaffected by it.",
         cost: 2,
@@ -107,9 +119,9 @@ export const cards = {
         cards: 2,
         influence: 0,
     },
-    village: {
-        id: "village",
-        name: "village",
+    space_colony: {
+        id: "space_colony",
+        name: "Space Colony",
         type: "action",
         description: "Draw 1 card, +2 Actions.",
         cost: 3,
@@ -119,9 +131,9 @@ export const cards = {
         cards: 1,
         influence: 0,
     },
-    merchant: {
-        id: "merchant",
-        name: "merchant",
+    rare_metal_merchant: {
+        id: "rare_metal_merchant",
+        name: "Rare Metal Merchant",
         type: "action",
         description: "The first time you play a Silver this turn, +1 Coin.",
         cost: 3,
@@ -131,9 +143,9 @@ export const cards = {
         cards: 1,
         influence: 0,
     },
-    workshop: {
-        id: "workshop",
-        name: "workshop",
+    mechanic_bay: {
+        id: "mechanic_bay",
+        name: "Mechanic Bay",
         type: "action",
         description: "Gain a card costing up to 4.",
         cost: 3,
@@ -143,9 +155,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    smithy: {
-        id: "smithy",
-        name: "smithy",
+    threed_printing_array: {
+        id: "threed_printing_array",
+        name: "3d Printing Array",
         type: "action",
         description: "Draw 3 cards.",
         cost: 4,
@@ -155,9 +167,9 @@ export const cards = {
         cards: 3,
         influence: 0,
     },
-    remodel: {
-        id: "remodel",
-        name: "remodel",
+    ship_upgrades: {
+        id: "ship_upgrades",
+        name: "Ship Upgrades",
         type: "action",
         description: "Trash a card from your hand. Gain a card costing up to 2 more than the trashed card.",
         cost: 4,
@@ -167,9 +179,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    militia: {
-        id: "militia",
-        name: "militia",
+    cargo_pirates: {
+        id: "cargo_pirates",
+        name: "Cargo Pirates",
         type: "action",
         description: "Each other player discards down to 3 cards in hand.",
         cost: 4,
@@ -179,9 +191,9 @@ export const cards = {
         cards: 0,
         influence: 0,
     },
-    market: {
-        id: "market",
-        name: "market",
+    galactic_trading_post: {
+        id: "galactic_trading_post",
+        name: "Galactic Trading Post",
         type: "action",
         description: "",
         cost: 5,
@@ -191,9 +203,9 @@ export const cards = {
         cards: 1,
         influence: 0,
     },
-    mine: {
-        id: "mine",
-        name: "mine",
+    asteroid_mine: {
+        id: "asteroid_mine",
+        name: "Asteroid Mine",
         type: "action",
         description: "Trash a resource from your hand. Gain a resource to your hand costing up to 3 more than it.",
         cost: 5,
@@ -202,6 +214,5 @@ export const cards = {
         buy: 0,
         cards: 0,
         influence: 0,
-    },
-
+    }
 };

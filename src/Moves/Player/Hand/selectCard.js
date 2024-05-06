@@ -16,6 +16,10 @@ export function selectCard({ G, ctx, playerID }, action, index) {
     switch (action) {
         // if current action is to buy a card, check if the card is a resource card
         case "buy":
+            if (G.players[playerID].shopSelection == null) {
+                return INVALID_MOVE;
+            }
+
             if (!card.type.includes("resource")) {
                 return INVALID_MOVE;
             }

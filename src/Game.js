@@ -121,6 +121,7 @@ export const Dominion = {
                 moves: { 
                     playCard: {
                         move: Moves.playCard,
+                        client: false,
                     },
                 },
                 next: "buy", // set the next stage
@@ -138,6 +139,10 @@ export const Dominion = {
                         move: Moves.selectPurchase,
                         noLimit: true,
                     },
+                    deselectPurchase: {
+                        move: Moves.deselectPurchase,
+                        noLimit: true,
+                    },
                     selectCard: {
                         move: Moves.selectCard,
                         noLimit: true,
@@ -148,6 +153,11 @@ export const Dominion = {
                     },
                     buyCard: {
                         move: Moves.buyCard,
+                    },
+                    turnCleanup: {
+                        move: Moves.turnCleanup,
+                        client: false,
+                        noLimit: true,
                     },
                 },
                 next: "cleanUp",
@@ -176,6 +186,7 @@ export const Dominion = {
                         noLimit: true,
                         optimistic: false,
                     },
+                    
                 },
                 /* calculates the next stage based on the number of action cards in the player's hand */
                 next: ({ G, playerID, ctx }) => {
@@ -194,10 +205,10 @@ export const Dominion = {
                 minMoves: 1,
                 maxMoves: 1,
                 moves: {
-                    drawHand: {
-                        move: Moves.drawHand,
+                    turnCleanup: {
+                        move: Moves.turnCleanup,
                         client: false,
-                    },
+                    }
                 },
                 next: "action",
             },
@@ -216,6 +227,7 @@ export const Dominion = {
         },
         playCard: {
             move: Moves.playCard,
+            client: false,
         },
         buyCard: {
             move: Moves.buyCard,
@@ -227,6 +239,11 @@ export const Dominion = {
         confirmCardSelectionAction: {
             move: Moves.confirmCardSelectionAction,
             client: false,
+        },
+        turnCleanup: {
+            move: Moves.turnCleanup,
+            client: false,
+            noLimit: true,
         },
     },
 
@@ -268,8 +285,12 @@ export const Dominion = {
                 selectPurchase: {
                     move: Moves.selectPurchase,
                 },
+                deselectPurchase: {
+                    move: Moves.deselectPurchase,
+                },
                 playCard: {
                     move: Moves.playCard,
+                    client: false,
                 },
                 buyCard: {
                     move: Moves.buyCard,
@@ -288,6 +309,11 @@ export const Dominion = {
                 confirmCardSelectionAction: {
                     move: Moves.confirmCardSelectionAction,
                     client: false,
+                },
+                turnCleanup: {
+                    move: Moves.turnCleanup,
+                    client: false,
+                    noLimit: true,
                 },
             },
             next: "end",

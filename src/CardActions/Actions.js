@@ -1,4 +1,5 @@
 import { cellarAction } from "./Cellar.js";
+import { discard } from "../Moves/Moves";
 
 export function Action({ G, playerID, events }, cardName, bool=false) {
 
@@ -11,12 +12,13 @@ export function Action({ G, playerID, events }, cardName, bool=false) {
             res = cellarAction({ G, playerID, events }, bool);
             break;
         default:
-            res = false;
+            res = true;
             break;
     }
-    if (bool){
-        G.players[playerID].action = {};
-    }
+    // if (bool){
+    //     discard({ G, playerID }, G.players[playerID].action.playerHandIndex);
+    //     G.players[playerID].action = {};
+    // }
     
     return res;
 }

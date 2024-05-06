@@ -5,7 +5,7 @@ export function startingDeck() {
         deck.push(cards.galactic_ice.id);
     }
     for (let i = 0; i < 3; i++) {
-        deck.push(cards.estate.id);
+        deck.push(cards.diplomatic_accord.id);
     }
     return deck;
 }
